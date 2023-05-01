@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: order-app
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/Shenali-SJ/app-yRBqhZUDn6gQA72xnahg7-helm.git
+    targetRevision: HEAD
+    path: Chart.yaml
+    helm:
+      valueFiles:
+      - values.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: argoapp
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
+    automated:
+      selfHeal: true
+      prune: true
